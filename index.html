@@ -3,51 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>音間 OTOMA - 音世界のためのプラットフォーム</title>
+    <title>音場 (OTOBA) - 睡蓮 / ジヴェルニーの庭</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
+    <style>
+        .demo-container {
+            text-align: center;
+            margin-top: 4rem;
+        }
+        .play-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #ffffff;
+            padding: 1.2rem 3rem;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: var(--font-sans);
+            border-radius: 2px;
+        }
+        @media (hover: hover) {
+            .play-btn:hover {
+                background: #ffffff;
+                color: #050505;
+            }
+        }
+        #status-area {
+            margin-top: 2.5rem;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+        #status-area.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .assigned-track {
+            display: block;
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+        }
+        .instruction-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            line-height: 1.8;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
-<body>
+<body style="align-items: center; justify-content: center;">
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     <div class="noise-overlay"></div>
 
     <main class="wrapper">
-        <header class="header reveal-target">
-            <p class="subtitle">A Platform for Soundscapes</p>
-            <h1 class="title">音間<span class="title-sub">OTOMA</span></h1>
-        </header>
-        
-        <section class="concept reveal-target">
-            <p>二度と同じ響きを持たない「音環境」に身を置く。</p>
-            <p>情報の永続性ではなく、現象の一回性を取り戻すためのプラットフォーム。</p>
-        </section>
-
-        <nav aria-label="展示作品一覧" class="exhibition-nav reveal-target">
-            <div class="works-grid">
-                
-                <a href="./album_impressionism.html" class="work-square hover-target">
-                    <div class="work-drawing" style="background-image: url('image/impressionism.jpg');"></div>
-                    <div class="work-info">
-                        <span class="work-title">印象派絵画の音を聴く</span>
-                    </div>
-                </a>
-
-                <a href="./album_reminiscence.html" class="work-square hover-target">
-                    <div class="work-drawing" style="background-image: url('image/reminiscence.jpg');"></div>
-                    <div class="work-info">
-                        <span class="work-title">追憶</span>
-                    </div>
-                </a>
-
+        <div class="reveal-target" style="text-align: center;">
+            
+            <div class="album-header">
+                <p class="subtitle">A Platform for Soundscapes</p>
+                <h1 class="title">睡蓮<span class="title-sub">ジヴェルニーの庭</span></h1>
             </div>
-        </nav>
+
+            <div class="demo-container">
+                <button id="join-btn" class="play-btn hover-target">空間に参加する</button>
+                
+                <div id="status-area">
+                    <span class="instruction-text">あなたの役割：</span>
+                    <span id="track-name" class="assigned-track">--</span>
+                    
+                    <p class="instruction-text">
+                        端末を机に置き、音が空間で混ざり合うのを体験してください。
+                    </p>
+                </div>
+            </div>
+
+        </div>
     </main>
 
     <script>
+        // 用意する音声ファイルのリスト（同じ長さのループ音源を推奨）
+        const soundPool = [
+            { src: 'audio/track1.mp3', name: '水面の揺らぎ' },
+            { src: 'audio/track2.mp3', name: '風と葉の擦れ' },
+            { src: 'audio/track3.mp3', name: '遠くのざわめき' },
+            { src: 'audio/track4.mp3', name: '空間の響き' },
+            { src: 'audio/track5.mp3', name: '光の粒子' }
+        ];
+
+        let currentAudio = null;
+        const joinBtn = document.getElementById('join-btn');
+        const statusArea = document.getElementById('status-area');
+        const trackNameDisplay = document.getElementById('track-name');
+
+        joinBtn.addEventListener('click', () => {
+            if (currentAudio) return;
+
+            // ランダムに1つのトラックを選択
+            const randomIndex = Math.floor(Math.random() * soundPool.length);
+            const selectedSound = soundPool[randomIndex];
+
+            // オーディオの生成と再生
+            currentAudio = new Audio(selectedSound.src);
+            currentAudio.loop = true;
+            
+            currentAudio.play().then(() => {
+                // 再生成功時のUI切り替え
+                joinBtn.style.display = 'none';
+                trackNameDisplay.textContent = selectedSound.name;
+                statusArea.classList.add('visible');
+            }).catch(error => {
+                console.error("再生エラー:", error);
+                alert("音声の再生に失敗しました。マナーモード等の設定をご確認ください。");
+            });
+        });
+
+        // カスタムカーソルの処理
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         const hoverTargets = document.querySelectorAll('.hover-target');
@@ -55,20 +134,11 @@
         if (window.matchMedia("(pointer: fine)").matches) {
             document.addEventListener('mousemove', (e) => {
                 cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-                setTimeout(() => {
-                    follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-                }, 80);
+                setTimeout(() => { follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; }, 80);
             });
-
             hoverTargets.forEach(target => {
-                target.addEventListener('mouseenter', () => {
-                    cursor.classList.add('is-active');
-                    follower.classList.add('is-active');
-                });
-                target.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('is-active');
-                    follower.classList.remove('is-active');
-                });
+                target.addEventListener('mouseenter', () => { cursor.classList.add('is-active'); follower.classList.add('is-active'); });
+                target.addEventListener('mouseleave', () => { cursor.classList.remove('is-active'); follower.classList.remove('is-active'); });
             });
         }
     </script>
