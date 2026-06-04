@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音間 OTOMA - 音世界のためのプラットフォーム</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="noise-overlay"></div>
+
+    <main class="wrapper">
+        <header class="header reveal-target">
+            <p class="subtitle">A Platform for Soundscapes</p>
+            <h1 class="title">音間<span class="title-sub">OTOMA</span></h1>
+        </header>
+        
+        <section class="concept reveal-target">
+            <p>二度と同じ響きを持たない「音環境」に身を置く。</p>
+            <p>情報の永続性ではなく、現象の一回性を取り戻すためのプラットフォーム。</p>
+        </section>
+
+        <nav aria-label="展示作品一覧" class="exhibition-nav reveal-target">
+            <div class="works-grid">
+                
+                <a href="./album_impressionism.html" class="work-square hover-target">
+                    <div class="work-drawing" style="background-image: url('image/impressionism.jpg');"></div>
+                    <div class="work-info">
+                        <span class="work-title">印象派絵画の音を聴く</span>
+                    </div>
+                </a>
+
+                <a href="./album_reminiscence.html" class="work-square hover-target">
+                    <div class="work-drawing" style="background-image: url('image/reminiscence.jpg');"></div>
+                    <div class="work-info">
+                        <span class="work-title">追憶</span>
+                    </div>
+                </a>
+
+            </div>
+        </nav>
+    </main>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        const hoverTargets = document.querySelectorAll('.hover-target');
+
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+                setTimeout(() => {
+                    follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+                }, 80);
+            });
+
+            hoverTargets.forEach(target => {
+                target.addEventListener('mouseenter', () => {
+                    cursor.classList.add('is-active');
+                    follower.classList.add('is-active');
+                });
+                target.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('is-active');
+                    follower.classList.remove('is-active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
