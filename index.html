@@ -12,14 +12,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 背景クリック・ホバー検知用の透明レイヤー (iOS対応のためのontouchstartを付与) -->
+    <div id="bg-trigger" ontouchstart=""></div>
+    <!-- 背景画像用のレイヤー -->
     <div id="bg-image"></div>
 
+    <!-- カスタムカーソル -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
+    <!-- ノイズオーバーレイ -->
     <div class="noise-overlay"></div>
-
-    <div id="bg-trigger" class="background-trigger"></div>
 
     <main class="wrapper">
         <div class="reveal-target">
@@ -45,29 +48,7 @@
     </main>
 
     <script>
-        const bgImage = document.getElementById('bg-image');
-        const bgTrigger = document.getElementById('bg-trigger');
-
-        // 【修正】触っている間・カーソルが乗っている間だけ画像を表示する処理
-        if (bgTrigger && bgImage) {
-            // PCでのマウスホバー対応
-            bgTrigger.addEventListener('mouseenter', () => {
-                bgImage.classList.add('is-visible');
-            });
-            bgTrigger.addEventListener('mouseleave', () => {
-                bgImage.classList.remove('is-visible');
-            });
-
-            // スマホでのタッチ対応（画面に触れたら表示、離したら非表示）
-            bgTrigger.addEventListener('touchstart', () => {
-                bgImage.classList.add('is-visible');
-            });
-            bgTrigger.addEventListener('touchend', () => {
-                bgImage.classList.remove('is-visible');
-            });
-        }
-
-        // カスタムカーソルの処理
+        // カスタムカーソルの処理のみ残す（背景制御はCSSに完全移行）
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         const hoverTargets = document.querySelectorAll('.hover-target');
