@@ -13,7 +13,7 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: var(--font-serif); /* 全体を明朝体に統一 */
+    font-family: var(--font-serif);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -23,10 +23,35 @@ body {
     padding: 3rem 2rem;
     position: relative;
     cursor: none; 
+    overflow: hidden;
 }
 
 /* ==========================================
-   2. Custom Cursor
+   2. Background Image Layer
+========================================== */
+#bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* ここに画像ファイルのパスを指定する */
+    background-image: url('image/background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* 画面タップ時に付与されるクラス */
+#bg-image.is-visible {
+    opacity: 0.35; /* 画像の明るさ。文字の視認性を保つため暗めに設定 */
+}
+
+/* ==========================================
+   3. Custom Cursor
 ========================================== */
 @media (pointer: fine) {
     .cursor, .cursor-follower {
@@ -51,7 +76,7 @@ body {
 a { cursor: none; }
 
 /* ==========================================
-   3. ノイズ＆レイアウト
+   4. ノイズ＆レイアウト
 ========================================== */
 .noise-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -69,12 +94,12 @@ a { cursor: none; }
 @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================
-   4. Typography (Header & Text)
+   5. Typography (Header & Text)
 ========================================== */
 .album-header { margin-bottom: 2.5rem; }
 
 .logo {
-    font-family: 'Cinzel', serif; /* OTOBAロゴ用 */
+    font-family: 'Cinzel', serif;
     font-size: 3.5rem;
     font-weight: 400;
     letter-spacing: 0.2em;
@@ -98,7 +123,7 @@ a { cursor: none; }
 }
 
 /* ==========================================
-   5. Square Interface (5つの役割の入り口)
+   6. Square Interface (5つの枠の入り口)
 ========================================== */
 .square-container {
     display: flex;
@@ -110,31 +135,23 @@ a { cursor: none; }
 }
 
 .square-btn {
-    display: flex; /* 文字を中央に配置 */
-    justify-content: center;
-    align-items: center;
+    display: block;
     width: 80px;
     height: 80px;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-    font-size: 1.2rem;
-    letter-spacing: 0.1em;
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     text-decoration: none;
 }
 
-/* PC（マウスあり）のホバーエフェクト */
 @media (hover: hover) {
     .square-btn:hover {
         background: #ffffff;
-        color: #000000; /* ホバー時は文字を黒く反転 */
         border-color: #ffffff;
         transform: scale(1.05);
     }
 }
 
-/* スマホ（指タッチ操作）時のエフェクト */
 .square-btn:active {
     background: rgba(255, 255, 255, 0.2);
     transform: scale(0.95);
