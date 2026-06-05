@@ -16,7 +16,10 @@
 
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
+
     <div class="noise-overlay"></div>
+
+    <div id="bg-trigger" class="background-trigger"></div>
 
     <main class="wrapper">
         <div class="reveal-target">
@@ -27,7 +30,7 @@
             </div>
 
             <p class="instruction">
-                端末の音量を上げ、枠のどれかを押して空間に参加してください。
+                端末の音量を上げ、枠のどれかを押して<br>空間に参加してください。
             </p>
 
             <div class="square-container">
@@ -42,19 +45,18 @@
     </main>
 
     <script>
-        // 背景切り替えの処理
         const bgImage = document.getElementById('bg-image');
-        
-        // 画面全体へのクリック（タップ）を検知
-        document.addEventListener('click', (e) => {
-            // 四角い枠（ボタン）を押した場合はリンク遷移を優先し、背景は切り替えない
-            if (e.target.closest('.square-btn')) return;
-            
-            // 背景画像の表示・非表示クラスを切り替える
-            bgImage.classList.toggle('is-visible');
-        });
+        const bgTrigger = document.getElementById('bg-trigger');
 
-        // カスタムカーソルの処理
+        // 背景切り替えの処理（【修正】専用レイヤーをクリック検知対象に）
+        if (bgTrigger && bgImage) {
+            bgTrigger.addEventListener('click', () => {
+                // 背景画像の表示・非表示クラスを切り替える
+                bgImage.classList.toggle('is-visible');
+            });
+        }
+
+        // カスタムカーソルの処理（変更なし）
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         const hoverTargets = document.querySelectorAll('.hover-target');
