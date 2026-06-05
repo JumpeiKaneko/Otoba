@@ -5,7 +5,7 @@
     --bg-color: #050505;
     --text-main: #ffffff;
     --text-muted: #888888;
-    --font-sans: 'Helvetica Neue', Arial, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    --font-serif: 'Noto Serif JP', serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,7 +13,7 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: var(--font-sans);
+    font-family: var(--font-serif); /* 全体を明朝体に統一 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -71,23 +71,27 @@ a { cursor: none; }
 /* ==========================================
    4. Typography (Header & Text)
 ========================================== */
-.album-header { margin-bottom: 2rem; }
+.album-header { margin-bottom: 2.5rem; }
+
+.logo {
+    font-family: 'Cinzel', serif; /* OTOBAロゴ用 */
+    font-size: 3.5rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    margin: 0 0 10px 0;
+}
+
 .subtitle {
-    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.15em;
-    color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;
-}
-.title {
-    font-size: 2.2rem; font-weight: 700; letter-spacing: 0.1em;
-    color: #ffffff;
-}
-.title-sub {
-    font-size: 0.4em; font-weight: 400; letter-spacing: 0.2em;
-    margin-left: 0.8em; color: #ffffff; vertical-align: middle;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin: 0;
 }
 
 .instruction {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     letter-spacing: 0.1em;
     margin-bottom: 3rem;
     line-height: 1.8;
@@ -101,16 +105,21 @@ a { cursor: none; }
     flex-wrap: wrap;
     justify-content: center;
     gap: 1.5rem;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
 }
 
 .square-btn {
-    display: block;
+    display: flex; /* 文字を中央に配置 */
+    justify-content: center;
+    align-items: center;
     width: 80px;
     height: 80px;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     text-decoration: none;
 }
@@ -119,6 +128,7 @@ a { cursor: none; }
 @media (hover: hover) {
     .square-btn:hover {
         background: #ffffff;
+        color: #000000; /* ホバー時は文字を黒く反転 */
         border-color: #ffffff;
         transform: scale(1.05);
     }
