@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTOBA | 睡蓮 - ジヴェルニーの庭</title>
     
-    <!-- フォントの読み込み（欧文ロゴ用のCinzelと、全体用の明朝体） -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
@@ -13,7 +12,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- カスタムカーソルとノイズ -->
+    <div id="bg-image"></div>
+
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     <div class="noise-overlay"></div>
@@ -21,30 +21,40 @@
     <main class="wrapper">
         <div class="reveal-target">
             
-            <!-- ロゴとタイトル部分 -->
             <div class="album-header">
                 <h1 class="logo">OTOBA</h1>
                 <p class="subtitle">睡蓮 - ジヴェルニーの庭</p>
             </div>
 
             <p class="instruction">
-                端末の音量を上げ、それぞれの要素を選択して空間に参加してください。
+                端末の音量を上げ、枠のどれかを押して空間に参加してください。
             </p>
 
-            <!-- 5つの空間へのポータル（WebGLビルドへのリンク） -->
             <div class="square-container">
-                <a href="build_water/index.html" class="square-btn hover-target">水</a>
-                <a href="build_grass/index.html" class="square-btn hover-target">草</a>
-                <a href="build_frog/index.html" class="square-btn hover-target">蛙</a>
-                <a href="build_insect/index.html" class="square-btn hover-target">虫</a>
-                <a href="build_bird/index.html" class="square-btn hover-target">鳥</a>
+                <a href="build_water/index.html" class="square-btn hover-target"></a>
+                <a href="build_grass/index.html" class="square-btn hover-target"></a>
+                <a href="build_frog/index.html" class="square-btn hover-target"></a>
+                <a href="build_insect/index.html" class="square-btn hover-target"></a>
+                <a href="build_bird/index.html" class="square-btn hover-target"></a>
             </div>
 
         </div>
     </main>
 
     <script>
-        // カスタムカーソルの処理（元の美しい動きをそのまま維持）
+        // 背景切り替えの処理
+        const bgImage = document.getElementById('bg-image');
+        
+        // 画面全体へのクリック（タップ）を検知
+        document.addEventListener('click', (e) => {
+            // 四角い枠（ボタン）を押した場合はリンク遷移を優先し、背景は切り替えない
+            if (e.target.closest('.square-btn')) return;
+            
+            // 背景画像の表示・非表示クラスを切り替える
+            bgImage.classList.toggle('is-visible');
+        });
+
+        // カスタムカーソルの処理
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         const hoverTargets = document.querySelectorAll('.hover-target');
