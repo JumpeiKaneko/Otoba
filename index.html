@@ -48,15 +48,26 @@
         const bgImage = document.getElementById('bg-image');
         const bgTrigger = document.getElementById('bg-trigger');
 
-        // 背景切り替えの処理（【修正】専用レイヤーをクリック検知対象に）
+        // 【修正】触っている間・カーソルが乗っている間だけ画像を表示する処理
         if (bgTrigger && bgImage) {
-            bgTrigger.addEventListener('click', () => {
-                // 背景画像の表示・非表示クラスを切り替える
-                bgImage.classList.toggle('is-visible');
+            // PCでのマウスホバー対応
+            bgTrigger.addEventListener('mouseenter', () => {
+                bgImage.classList.add('is-visible');
+            });
+            bgTrigger.addEventListener('mouseleave', () => {
+                bgImage.classList.remove('is-visible');
+            });
+
+            // スマホでのタッチ対応（画面に触れたら表示、離したら非表示）
+            bgTrigger.addEventListener('touchstart', () => {
+                bgImage.classList.add('is-visible');
+            });
+            bgTrigger.addEventListener('touchend', () => {
+                bgImage.classList.remove('is-visible');
             });
         }
 
-        // カスタムカーソルの処理（変更なし）
+        // カスタムカーソルの処理
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         const hoverTargets = document.querySelectorAll('.hover-target');
