@@ -35,31 +35,30 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* ここに画像ファイルのパスを指定する */
     background-image: url('image/background.jpg'); 
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-    z-index: -3; /* ノイズより後ろ、背景色より前 */
+    transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: -3; 
     pointer-events: none;
 }
 
-/* 画面タップ時に付与されるクラス */
+/* アクティブ時に画像が浮かび上がる */
 #bg-image.is-visible {
-    opacity: 0.35; /* 画像の明るさ */
+    opacity: 0.35; 
 }
 
-/* 【追加】背景クリック検知用の透明レイヤー */
+/* 背景ホバー・タッチ検知用の透明レイヤー */
 .background-trigger {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* コンテンツより後ろ、ノイズより前 */
+    z-index: -1; 
     background: transparent;
-    pointer-events: auto; /* クリックを検知可能に */
+    pointer-events: auto;
 }
 
 /* ==========================================
@@ -93,10 +92,10 @@ a { cursor: none; }
 .noise-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: -2; /* 背景画像より前 */
+    pointer-events: none; z-index: -2; 
 }
 
-.wrapper { max-width: 760px; width: 100%; margin: 0 auto; text-align: center; position: relative; z-index: 1; /* 背景トリガーより前 */ }
+.wrapper { max-width: 760px; width: 100%; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
 
 .reveal-target {
     opacity: 0; transform: translateY(20px);
@@ -131,7 +130,7 @@ a { cursor: none; }
     font-size: 0.95rem;
     letter-spacing: 0.1em;
     margin-bottom: 3rem;
-    line-height: 1.8; /* 改行時の行間 */
+    line-height: 1.8; 
 }
 
 /* ==========================================
@@ -144,7 +143,7 @@ a { cursor: none; }
     gap: 1.5rem;
     max-width: 500px;
     margin: 0 auto;
-    position: relative; z-index: 2; /* wrapperよりさらに前 */
+    position: relative; z-index: 2; 
 }
 
 .square-btn {
@@ -155,7 +154,7 @@ a { cursor: none; }
     border: 1px solid rgba(255, 255, 255, 0.4);
     transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     text-decoration: none;
-    pointer-events: auto; /* 確実にクリック可能に */
+    pointer-events: auto; 
 }
 
 @media (hover: hover) {
